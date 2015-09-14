@@ -19,7 +19,7 @@ Ripple.prototype = {
     this.baseImagePixels = new Array(canvas.width * canvas.height);
     
     var image = context.getImageData(0, 0, canvas.width, canvas.height);
-    for (var i = 0; i < canvas.height; ++i) {
+    for (var i = 0; i < canvas.height; i++) {
       for (var j = 0; j < canvas.width; j++) {
         var p = ((i * 4) * canvas.width) + (j * 4);
         this.baseImagePixels[(i * canvas.width) + j] = 
@@ -33,7 +33,7 @@ Ripple.prototype = {
   },
   getUpdater: function() {
     var imagePixels = this.baseImagePixels.concat();
-    for (var i = 0; i < imagePixels.length; ++i) {
+    for (var i = 0; i < imagePixels.length; i++) {
       var k = imagePixels[i];
       imagePixels[i] = (
         ((k & 0x00ff0000) >> 16) + 
@@ -44,7 +44,7 @@ Ripple.prototype = {
     var tmpPixels = this.baseImagePixels.concat();
     
     this.pixels = new Array(this.canvas.width * this.canvas.height);
-    for(i = 0; i < this.pixels.length; ++i)
+    for(i = 0; i < this.pixels.length; i++)
       this.pixels[i] = 0;
     var pixelsBefore = this.pixels.concat();
     var pixelsMain = this.pixels.concat();
@@ -61,9 +61,9 @@ Ripple.prototype = {
         );
       }
       // 波紋処理
-      for(var y = 1; y < that.canvas.height - 1; ++y) {
+      for(var y = 1; y < that.canvas.height - 1; y++) {
         var py = that.canvas.width * y;
-        for(var x = 1; x < that.canvas.width - 1; ++x) {
+        for(var x = 1; x < that.canvas.width - 1; x++) {
           var j = py + x;
           var f = pixelsMain[j] + (
             pixelsBefore[j - that.canvas.width] + // top
@@ -91,8 +91,8 @@ Ripple.prototype = {
         y = 0;
       return y * this.canvas.width + x;
     };
-    for(var i = -this.SIZE; i < this.SIZE; ++i) {
-      for(var j = -this.SIZE; j < this.SIZE; ++j) {
+    for(var i = -this.SIZE; i < this.SIZE; i++) {
+      for(var j = -this.SIZE; j < this.SIZE; j++) {
         var r = this.table[i + this.SIZE][j + this.SIZE];
         if(r <= this.SIZE) {
           this.pixels[off(i + px, j + py)] = size >> r;
@@ -103,7 +103,7 @@ Ripple.prototype = {
   makeTransverseWave: function(y) {
     var hh = y * this.canvas.width;
     if(y < this.canvas.height) {
-      for(var i = 1; i < this.canvas.width - 1; ++i) {
+      for(var i = 1; i < this.canvas.width - 1; i++) {
         this.pixels[hh + i] = 
           this.pixels[hh + this.canvas.width + i] = 
           this.pixels[hh + this.canvas.width + this.canvas.width + i] = -128 * this.ACCURACY;
@@ -113,9 +113,9 @@ Ripple.prototype = {
   initTable_: function() {
     var size = this.SIZE * 2;
     this.table = new Array(size);
-    for (var i = 0; i < size; ++i) {
+    for (var i = 0; i < size; i++) {
       this.table[i] = new Array(size);
-      for (var j = 0; j < size; ++j) {
+      for (var j = 0; j < size; j++) {
         this.table[i][j] = Math.round(
           Math.sqrt((i - this.SIZE) * (i - this.SIZE) + (j - this.SIZE) * (j - this.SIZE))
         );
@@ -124,7 +124,7 @@ Ripple.prototype = {
   },
   initPalette_: function(sr, sg, sb, er, eg, eb) {
     this.palette = new Array(256);
-    for(var i = 0; i < this.palette.length; ++i) {
+    for(var i = 0; i < this.palette.length; i++) {
       var d = i / (this.palette.length - 1);
       var r = Math.floor((er-sr) * d + sr);
       var g = Math.floor((eg-sg) * d + sg);
