@@ -19,31 +19,31 @@
     <script src="ripple.js"></script>
     <script>
       window.onload = function () {
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        var bg = new Image();
-        bg.src = "octocat.jpg";
-        bg.onload = function() {
-          context.drawImage(bg, 0, 0);
-          
-          var ripple = new Ripple();
-          ripple.initialize(canvas);
-          setInterval(ripple.getUpdater(), 32);
-          
-          var move = function(event) {
-            ripple.makeWave(event.clientX, event.clientY);
-          };
-          var down = function(event) {
-            ripple.makeTransverseWave(event.clientY);
-          };
-          if(document.addEventListener) {
-            document.addEventListener("mousemove" , move);
-            document.addEventListener("mousedown" , down);
-          }else if(document.attachEvent) {
-            document.attachEvent("onmousemove" , move);
-            document.attachEvent("onmousedown" , down);
+          var canvas = document.getElementById('canvas');
+          var context = canvas.getContext('2d');
+          var bg = new Image();
+          bg.src = "octocat.jpg";
+          bg.onload = function() {
+              context.drawImage(bg, 0, 0);
+              
+              var ripple = new Ripple();
+              ripple.initialize(canvas);
+              setInterval(ripple.getUpdater(), 32);
+              
+              var move = function(event) {
+                  ripple.makeWave(event.clientX, event.clientY);
+              };
+              var down = function(event) {
+                  ripple.makeTransverseWave(event.clientY);
+              };
+              if(document.addEventListener) {
+                  document.addEventListener("mousemove" , move);
+                  document.addEventListener("mousedown" , down);
+              }else if(document.attachEvent) {
+                  document.attachEvent("onmousemove" , move);
+                  document.attachEvent("onmousedown" , down);
+              }
           }
-        }
       }
     </script>
   </body>
